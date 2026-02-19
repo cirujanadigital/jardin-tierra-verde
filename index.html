@@ -20,6 +20,12 @@
 <meta property="og:description" content="Vivero y servicios de paisajismo en Quito. Plantas, diseño de jardines, mantenimiento. Asesoría GRATIS.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_EC">
+<!-- FIX RENDIMIENTO 1: Google Fonts carga asíncrona (evita render-blocking) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@700;800&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@700;800&display=swap"></noscript>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -46,8 +52,6 @@
 }
 </script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@700;800&display=swap');
-
 :root {
   --green-deep:#1a3a1a; --green-mid:#2d6a2d; --green-bright:#4caf50; --green-lime:#8bc34a;
   --green-pale:#e8f5e9; --earth:#5c3d1a; --earth-light:#a67c52; --cream:#f9f6f0;
@@ -79,7 +83,8 @@ img{max-width:100%;display:block}
 .btn--wa:hover{background:var(--wa-dark);border-color:var(--wa-dark);transform:translateY(-2px);box-shadow:0 4px 16px rgba(37,211,102,0.4)}
 .btn--white{background:white;color:var(--green-deep);border-color:white}
 .btn--white:hover{background:var(--cream);transform:translateY(-2px);box-shadow:var(--shadow)}
-.btn--sm{padding:10px 20px;font-size:0.875rem}
+/* FIX ACCESIBILIDAD 4: btn--sm font-size subido a 0.9rem para mejor contraste por tamaño */
+.btn--sm{padding:10px 20px;font-size:0.9rem}
 /* NAV */
 #navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:12px 0;background:rgba(249,246,240,0.95);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:all 0.3s ease}
 #navbar.scrolled{box-shadow:var(--shadow);border-bottom-color:var(--border)}
@@ -147,8 +152,9 @@ img{max-width:100%;display:block}
 .product-img img{width:100%;height:200px;object-fit:cover;display:block;transition:transform 0.4s ease}
 .product-card:hover .product-img img{transform:scale(1.05)}
 .product-img-fallback{display:none;width:100%;height:200px;align-items:center;justify-content:center;background:var(--green-pale);font-size:3rem}
-.product-badge{position:absolute;top:12px;left:12px;background:var(--green-bright);color:white;padding:3px 10px;border-radius:50px;font-size:0.75rem;font-weight:600}
-.product-badge.out{background:#ff7043}
+/* FIX ACCESIBILIDAD 4: badge con fondo más oscuro #388e3c para superar ratio de contraste */
+.product-badge{position:absolute;top:12px;left:12px;background:#388e3c;color:white;padding:3px 10px;border-radius:50px;font-size:0.75rem;font-weight:700}
+.product-badge.out{background:#c62828;color:#fff}
 .product-fav-btn{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;border:none;background:white;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.15);transition:all 0.2s;font-size:1.1rem}
 .product-fav-btn:hover{transform:scale(1.1)}
 .product-fav-btn.active{background:#ff6b6b}
@@ -168,7 +174,8 @@ img{max-width:100%;display:block}
 .gallery-item:hover{transform:scale(1.02)}
 .gallery-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
 .gallery-label{position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(transparent,rgba(26,58,26,0.8));color:white}
-.gallery-label h4{font-size:0.95rem;font-family: 'Inter', sans-serif;font-weight:600}
+/* FIX ACCESIBILIDAD 5: .gallery-title para reemplazar h4 dentro de galería */
+.gallery-title{font-size:0.95rem;font-family: 'Inter', sans-serif;font-weight:600;margin:0}
 .gallery-label span{font-size:0.8rem;opacity:0.8}
 .gallery-before-after{display:grid;grid-template-columns:1fr 1fr;gap:2px;height:100%}
 .gallery-before,.gallery-after{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px}
@@ -289,15 +296,14 @@ footer{background:var(--green-deep);color:rgba(255,255,255,0.7);padding:56px 0 2
 </style>
 </head>
 <body>
-
 <div class="urgency-band">
   🌳 Servicio de poda urgente disponible — <a href="https://wa.me/593969520803?text=Hola%2C+necesito+servicio+de+poda+urgente">Llamar ahora: +593 96 952 0803</a>
 </div>
-
 <nav id="navbar">
   <div class="container nav-inner">
     <a href="#hero" class="nav-logo">
-      <img src="logo-horizontal-tierra-verde-sf.png" alt="Jardín Tierra Verde" width="180" height="54" loading="eager">
+      <!-- FIX RENDIMIENTO 2: fetchpriority="high" en logo navbar -->
+      <img src="logo-horizontal-tierra-verde-sf.png" alt="Jardín Tierra Verde" width="180" height="54" loading="eager" fetchpriority="high">
     </a>
     <ul class="nav-links">
       <li><a href="#servicios">Servicios</a></li>
@@ -308,13 +314,13 @@ footer{background:var(--green-deep);color:rgba(255,255,255,0.7);padding:56px 0 2
     </ul>
     <div style="display:flex;align-items:center;gap:10px;">
       <button class="nav-fav-btn" onclick="toggleFavPanel()">❤️ Favoritos <span class="fav-count" id="fav-count">0</span></button>
-      <button class="nav-hamburger" onclick="document.getElementById('mobile-nav').classList.add('open')">
+      <!-- FIX ACCESIBILIDAD 1: aria-label en botón hamburguesa -->
+      <button class="nav-hamburger" aria-label="Abrir menú" onclick="document.getElementById('mobile-nav').classList.add('open')">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
     </div>
   </div>
 </nav>
-
 <div id="mobile-nav">
   <button id="mobile-close" onclick="document.getElementById('mobile-nav').classList.remove('open')">✕</button>
   <a href="#servicios" onclick="document.getElementById('mobile-nav').classList.remove('open')">Servicios</a>
@@ -325,6 +331,8 @@ footer{background:var(--green-deep);color:rgba(255,255,255,0.7);padding:56px 0 2
   <a href="https://wa.me/593969520803" class="btn btn--wa btn--sm">WhatsApp</a>
 </div>
 
+<!-- FIX ACCESIBILIDAD 6: landmark <main> envolviendo todo el contenido principal -->
+<main>
 <section id="hero">
   <div class="hero-bg-shapes"><div class="hero-circle"></div><div class="hero-circle"></div><div class="hero-circle"></div></div>
   <div class="container hero-inner">
@@ -352,7 +360,6 @@ footer{background:var(--green-deep);color:rgba(255,255,255,0.7);padding:56px 0 2
     </div>
   </div>
 </section>
-
 <section id="servicios" class="section" style="background:var(--white);">
   <div class="container">
     <div class="section-header fade-in">
@@ -380,24 +387,24 @@ footer{background:var(--green-deep);color:rgba(255,255,255,0.7);padding:56px 0 2
         <h3 style="color:var(--green-deep);margin-bottom:8px;">Solicita tu Cotización</h3>
         <p style="margin-bottom:28px;">Completa el formulario y te contactamos en menos de 2 horas</p>
         <div class="form-row">
-          <div class="form-group"><label>Tu nombre</label><input type="text" id="q-name" placeholder="Ej. María González"></div>
-          <div class="form-group"><label>WhatsApp</label><input type="tel" id="q-phone" placeholder="+593 9X XXX XXXX"></div>
+          <div class="form-group"><label for="q-name">Tu nombre</label><input type="text" id="q-name" placeholder="Ej. María González"></div>
+          <div class="form-group"><label for="q-phone">WhatsApp</label><input type="tel" id="q-phone" placeholder="+593 9X XXX XXXX"></div>
         </div>
         <div class="form-row">
-          <div class="form-group"><label>Servicio</label>
+          <!-- FIX ACCESIBILIDAD 2: labels con for asociados a cada select -->
+          <div class="form-group"><label for="q-service">Servicio</label>
             <select id="q-service"><option value="">Selecciona...</option><option>Mantenimiento de jardín</option><option>Diseño de jardín</option><option>Control de plagas</option><option>Poda de árboles</option><option>Aplicación de abonos</option><option>Mantenimiento de césped</option><option>Sistema de riego</option><option>Otro</option></select>
           </div>
-          <div class="form-group"><label>Tamaño aprox. (m²)</label>
+          <div class="form-group"><label for="q-size">Tamaño aprox. (m²)</label>
             <select id="q-size"><option value="">Selecciona...</option><option>Menos de 20 m²</option><option>20–50 m²</option><option>50–100 m²</option><option>100–300 m²</option><option>Más de 300 m²</option></select>
           </div>
         </div>
-        <div class="form-group"><label>Mensaje (opcional)</label><textarea id="q-msg" placeholder="Cuéntanos sobre tu jardín..."></textarea></div>
+        <div class="form-group"><label for="q-msg">Mensaje (opcional)</label><textarea id="q-msg" placeholder="Cuéntanos sobre tu jardín..."></textarea></div>
         <button class="btn btn--wa" style="width:100%;justify-content:center;" onclick="submitQuote()">📱 Enviar por WhatsApp</button>
       </div>
     </div>
   </div>
 </section>
-
 <div class="cta-band">
   <div class="container">
     <h2>¿No sabes qué planta elegir?</h2>
@@ -408,7 +415,6 @@ footer{background:var(--green-deep);color:rgba(255,255,255,0.7);padding:56px 0 2
     </div>
   </div>
 </div>
-
 <section id="catalogo" class="section">
   <div class="container">
     <div class="section-header fade-in">
@@ -425,7 +431,8 @@ footer{background:var(--green-deep);color:rgba(255,255,255,0.7);padding:56px 0 2
         <button class="filter-btn" data-cat="insumos">🌿 Insumos</button>
         <button class="filter-btn" data-cat="herramientas">🛠️ Herramientas</button>
       </div>
-      <select class="catalog-sort" id="price-sort" onchange="sortProducts()">
+      <!-- FIX ACCESIBILIDAD 2: aria-label en select sin label visible -->
+      <select class="catalog-sort" id="price-sort" aria-label="Ordenar productos por precio" onchange="sortProducts()">
         <option value="">Ordenar por precio</option>
         <option value="asc">Menor a mayor</option>
         <option value="desc">Mayor a menor</option>
@@ -434,7 +441,6 @@ footer{background:var(--green-deep);color:rgba(255,255,255,0.7);padding:56px 0 2
     <div class="products-grid" id="products-grid"></div>
   </div>
 </section>
-
 <div class="cta-band" style="background:linear-gradient(135deg,var(--earth) 0%,var(--earth-light) 100%);">
   <div class="container">
     <h2>¿Tienes favoritos guardados?</h2>
@@ -444,7 +450,6 @@ footer{background:var(--green-deep);color:rgba(255,255,255,0.7);padding:56px 0 2
     </div>
   </div>
 </div>
-
 <section id="galeria" class="section" style="background:var(--white);">
   <div class="container">
     <div class="section-header fade-in">
@@ -458,7 +463,6 @@ footer{background:var(--green-deep);color:rgba(255,255,255,0.7);padding:56px 0 2
     </div>
   </div>
 </section>
-
 <section id="testimonios" class="section section--dark">
   <div class="container">
     <div class="section-header fade-in">
@@ -472,7 +476,6 @@ footer{background:var(--green-deep);color:rgba(255,255,255,0.7);padding:56px 0 2
     </div>
   </div>
 </section>
-
 <section id="contacto" class="section">
   <div class="container">
     <div class="section-header fade-in">
@@ -498,24 +501,26 @@ footer{background:var(--green-deep);color:rgba(255,255,255,0.7);padding:56px 0 2
       </div>
       <div class="contact-form fade-in">
         <h3>Envíanos un mensaje</h3>
-        <div class="form-group"><label>Nombre</label><input type="text" id="c-name" placeholder="Tu nombre completo"></div>
+        <div class="form-group"><label for="c-name">Nombre</label><input type="text" id="c-name" placeholder="Tu nombre completo"></div>
         <div class="form-row">
-          <div class="form-group"><label>WhatsApp</label><input type="tel" id="c-phone" placeholder="+593 9X XXX XXXX"></div>
-          <div class="form-group"><label>Email</label><input type="email" id="c-email" placeholder="tu@email.com"></div>
+          <div class="form-group"><label for="c-phone">WhatsApp</label><input type="tel" id="c-phone" placeholder="+593 9X XXX XXXX"></div>
+          <div class="form-group"><label for="c-email">Email</label><input type="email" id="c-email" placeholder="tu@email.com"></div>
         </div>
-        <div class="form-group"><label>Asunto</label>
+        <!-- FIX ACCESIBILIDAD 2: label for asociado a c-subject -->
+        <div class="form-group"><label for="c-subject">Asunto</label>
           <select id="c-subject"><option>Consulta sobre producto</option><option>Solicitar servicio</option><option>Cotización de proyecto</option><option>Otro</option></select>
         </div>
-        <div class="form-group"><label>Mensaje</label><textarea id="c-msg" placeholder="¿En qué podemos ayudarte?"></textarea></div>
+        <div class="form-group"><label for="c-msg">Mensaje</label><textarea id="c-msg" placeholder="¿En qué podemos ayudarte?"></textarea></div>
         <button class="btn btn--wa" style="width:100%;justify-content:center;" onclick="submitContact()">💬 Enviar por WhatsApp</button>
       </div>
     </div>
   </div>
 </section>
-
 <section id="mapa">
   <div class="map-wrap">
+    <!-- FIX ACCESIBILIDAD 3: title en iframe del mapa -->
     <iframe class="map-embed" loading="lazy"
+      title="Ubicación de Jardín Tierra Verde en Google Maps"
       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.8047!2d-78.419156!3d-0.217824!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMC7CsDE3JzA0LjIiUyA3OMKwMjUnMDEuMiJX!5e0!3m2!1ses!2sec!4v1700000000000"
       allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
     <div class="map-overlay">
@@ -525,14 +530,17 @@ footer{background:var(--green-deep);color:rgba(255,255,255,0.7);padding:56px 0 2
     </div>
   </div>
 </section>
+</main>
 
 <footer>
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="#hero">
+          <!-- FIX RENDIMIENTO 3: width y height explícitos en logo footer -->
           <img src="logo-horizontal-tierra-verde-sf.png"
                alt="Jardín Tierra Verde"
+               width="144" height="43"
                style="height:48px; width:auto; filter: brightness(0) invert(1); margin-bottom:16px;"
                loading="lazy">
         </a>
@@ -582,14 +590,12 @@ footer{background:var(--green-deep);color:rgba(255,255,255,0.7);padding:56px 0 2
     </div>
   </div>
 </footer>
-
 <div class="wa-float">
   <div class="wa-float-label">¿Necesitas ayuda? ¡Escríbenos!</div>
   <a href="https://wa.me/593969520803?text=Hola%2C+vengo+desde+el+sitio+web" class="wa-float-btn" target="_blank" aria-label="WhatsApp">
     <svg width="32" height="32" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
   </a>
 </div>
-
 <div id="fav-panel">
   <div class="fav-panel-header">
     <h3>❤️ Mis Favoritos</h3>
@@ -599,14 +605,12 @@ footer{background:var(--green-deep);color:rgba(255,255,255,0.7);padding:56px 0 2
   <div id="fav-empty"><span class="fav-empty-icon">🌱</span><p>Aún no tienes favoritos.<br>Haz clic en ❤️ en cualquier producto.</p></div>
   <button id="fav-wa-all" class="btn btn--wa" onclick="consultAllFavs()" style="display:none;">💬 Consultar todos por WhatsApp</button>
 </div>
-
 <div id="lightbox" onclick="closeLightbox()">
   <div id="lightbox-content" onclick="event.stopPropagation()">
     <button id="lightbox-close" onclick="closeLightbox()">✕</button>
     <div id="lightbox-body"></div>
   </div>
 </div>
-
 <script>
 // ── DATOS: PRODUCTOS ──────────────────────────────────────
 const products = [
@@ -635,7 +639,6 @@ const products = [
   {id:23, name:"Set Herramientas Jardín",sci:"Acero inoxidable (5 piezas)",  cat:"herramientas",price:45, stock:"available", luz:"—", riego:"—", temp:"—", emoji:"🛠️", img:"https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&h=600&fit=crop&auto=format&q=80"},
   {id:24, name:"Manguera Extensible 30m",sci:"Látex reforzado + accesorios", cat:"herramientas",price:35, stock:"consult",   luz:"—", riego:"—", temp:"—", emoji:"💧", img:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop&auto=format&q=80"},
 ];
-
 // ── DATOS: GALERÍA ────────────────────────────────────────
 const galleryProjects = [
   {title:"Jardín Residencial Norte",  desc:"Diseño y elaboración completa", beforeEmoji:"🏚️", afterEmoji:"🌺"},
@@ -645,7 +648,6 @@ const galleryProjects = [
   {title:"Jardín Vertical Interior",  desc:"Diseño jardín vertical",        beforeEmoji:"🧱",  afterEmoji:"🍃"},
   {title:"Área Verde Conjunto",       desc:"Mantenimiento comunal",         beforeEmoji:"🌵",  afterEmoji:"🌱"},
 ];
-
 // ── DATOS: TESTIMONIOS ────────────────────────────────────
 const testimonials = [
   {name:"Derrick N.", init:"A", text:"Wonderful garden/Nursery with some rare plants. Good prices too!", date:"Hace 2 años", stars:5},
@@ -655,15 +657,12 @@ const testimonials = [
   {name:"Paola G.", init:"P", text:"La asesoría gratuita es un plus increíble. Me explicaron todo sobre cómo cuidar mis plantas y resolver los problemas que tenía.", date:"Hace 1 mes", stars:4},
   {name:"Eduardo F.", init:"E", text:"Diseñaron toda la terraza de mi departamento. Quedó espectacular. La atención desde el inicio hasta el fin fue perfecta.", date:"Hace 3 meses", stars:5},
 ];
-
 // ── FAVORITOS ─────────────────────────────────────────────
 let favs = JSON.parse(localStorage.getItem('jtv_favs') || '[]');
-
 function updateFavCount() {
   document.getElementById('fav-count').textContent = favs.length;
   document.getElementById('fav-count-2').textContent = favs.length;
 }
-
 function toggleFav(id) {
   id = parseInt(id);
   const idx = favs.indexOf(id);
@@ -674,7 +673,6 @@ function toggleFav(id) {
   const btn = document.querySelector(`[data-fav-btn="${id}"]`);
   if (btn) { btn.classList.toggle('active', favs.includes(id)); btn.textContent = favs.includes(id) ? '❤️' : '🤍'; }
 }
-
 function renderFavPanel() {
   const list = document.getElementById('fav-list');
   const empty = document.getElementById('fav-empty');
@@ -695,17 +693,13 @@ function renderFavPanel() {
     list.appendChild(div);
   });
 }
-
 function toggleFavPanel() { document.getElementById('fav-panel').classList.toggle('open'); renderFavPanel(); }
-
 function consultAllFavs() {
   const items = favs.map(id => { const p = products.find(x => x.id === id); return p ? `• ${p.name} ($${p.price})` : ''; }).filter(Boolean).join('\n');
   window.open(`https://wa.me/593969520803?text=${encodeURIComponent('Hola Jardín Tierra Verde, consulto disponibilidad de:\n' + items + '\n\n¿Tienen stock?')}`, '_blank');
 }
-
 // ── RENDER PRODUCTOS ──────────────────────────────────────
 const catLabels = {interior:'🪴 Interior', exterior:'🌺 Exterior', arboles:'🌳 Árbol', insumos:'🌿 Insumo', herramientas:'🛠️ Herramienta'};
-
 function renderProducts(cat = 'all') {
   const grid = document.getElementById('products-grid'); grid.innerHTML = '';
   let filtered = cat === 'all' ? products : products.filter(p => p.cat === cat);
@@ -739,20 +733,18 @@ function renderProducts(cat = 'all') {
     grid.appendChild(div);
   });
 }
-
 function sortProducts() { renderProducts(document.querySelector('.filter-btn.active')?.dataset.cat || 'all'); }
-
 document.getElementById('cat-filters').addEventListener('click', e => {
   const btn = e.target.closest('.filter-btn'); if (!btn) return;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active'); renderProducts(btn.dataset.cat);
 });
-
 // ── RENDER GALERÍA ────────────────────────────────────────
 function renderGallery() {
   const grid = document.getElementById('gallery-grid');
   galleryProjects.forEach((p, i) => {
     const div = document.createElement('div'); div.className = 'gallery-item'; div.onclick = () => openLightbox(i);
+    // FIX ACCESIBILIDAD 5: <p class="gallery-title"> en lugar de <h4> dentro de .gallery-label
     div.innerHTML = `
       <div class="gallery-placeholder">
         <div class="gallery-before-after">
@@ -760,11 +752,10 @@ function renderGallery() {
           <div class="gallery-after"><span style="font-size:3.5rem">${p.afterEmoji}</span><span class="gallery-ba-label">Después</span></div>
         </div>
       </div>
-      <div class="gallery-label"><h4>${p.title}</h4><span>${p.desc}</span></div>`;
+      <div class="gallery-label"><p class="gallery-title">${p.title}</p><span>${p.desc}</span></div>`;
     grid.appendChild(div);
   });
 }
-
 function openLightbox(i) {
   const p = galleryProjects[i];
   document.getElementById('lightbox-body').innerHTML = `
@@ -780,7 +771,6 @@ function openLightbox(i) {
   document.getElementById('lightbox').classList.add('open');
 }
 function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
-
 // ── RENDER TESTIMONIOS ────────────────────────────────────
 function renderTestimonials() {
   const grid = document.getElementById('testimonials-grid');
@@ -796,7 +786,6 @@ function renderTestimonials() {
     grid.appendChild(div);
   });
 }
-
 // ── FORMULARIOS ───────────────────────────────────────────
 function submitQuote() {
   const name = document.getElementById('q-name').value.trim();
@@ -808,14 +797,12 @@ function submitQuote() {
   const text = `Hola Jardín Tierra Verde, me llamo *${name}*.\n\n📋 *Servicio:* ${service}\n📐 *Área:* ${size}\n📱 *Contacto:* ${phone}\n💬 *Mensaje:* ${msg || '—'}`;
   window.open(`https://wa.me/593969520803?text=${encodeURIComponent(text)}`, '_blank');
 }
-
 function submitContact() {
   const name = document.getElementById('c-name').value.trim();
   const msg = document.getElementById('c-msg').value.trim();
   if (!name) { alert('Por favor ingresa tu nombre.'); return; }
   window.open(`https://wa.me/593969520803?text=${encodeURIComponent(`Hola, soy *${name}*. ${msg}`)}`, '_blank');
 }
-
 // ── SCROLL + FADE ─────────────────────────────────────────
 window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
@@ -823,7 +810,6 @@ window.addEventListener('scroll', () => {
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
 }, {threshold: 0.1, rootMargin: '0px 0px -50px 0px'});
-
 // ── INIT ──────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   renderProducts();
@@ -832,7 +818,6 @@ document.addEventListener('DOMContentLoaded', () => {
   updateFavCount();
   setTimeout(() => { document.querySelectorAll('.fade-in').forEach(el => io.observe(el)); }, 100);
 });
-
 // Año automático
 document.getElementById('footer-year').textContent = new Date().getFullYear();
 </script>
